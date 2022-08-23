@@ -1,0 +1,35 @@
+@using Foundation.Features.Blocks.AlexButtonBlock
+
+@model IBlockViewModel<AlexButtonBlock>
+
+
+@{
+    var buttonStyle = "";
+
+    if (Model.CurrentBlock.UseCustomBackgroundColor)
+    {
+        // Use the custom background color that has been given
+        buttonStyle += ("background-color: " + Model.CurrentBlock.ButtonBackgroundColor);
+    }
+    if (Model.CurrentBlock.UseCustomBorder)
+    {
+        buttonStyle += ("border: " + Model.CurrentBlock.BorderType + " " + Model.CurrentBlock.ButtonBorderColor);
+    }
+
+}
+
+<div style="background-color: @Model.CurrentBlock.BackgroundColor; opacity:@Model.CurrentBlock.BlockOpacity;" class="alex-button-block @(Model.CurrentBlock.Padding + " " + Model.CurrentBlock.Margin)">
+    <a class="button-origin"
+       style="@buttonStyle"
+       title="@Model.CurrentBlock.ButtonText"
+       href="@Url.ContentUrl(Model.CurrentBlock.ContentLink)"
+       @Html.EditAttributes(m => m.CurrentBlock.ButtonText)>
+        @{
+            var buttonText = "Button text goes here";  // Default placeholder text if no button text has been given
+            if (!string.IsNullOrWhiteSpace(Model.CurrentBlock.ButtonText))
+                buttonText = Model.CurrentBlock.ButtonText;
+              
+        }
+        @buttonText
+     </a>
+</div>
